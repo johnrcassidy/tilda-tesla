@@ -1,4 +1,4 @@
-import { TabType } from '../../types';
+import type { TabType } from '../../types';
 import './TabNavigation.css';
 
 interface TabNavigationProps {

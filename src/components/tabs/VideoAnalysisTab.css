@@ -1,0 +1,31 @@
+.tab-content {
+  padding: 32px 0;
+}
+
+.tab-content h2 {
+  font-size: 32px;
+  font-weight: 500;
+  color: #171a20;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.tab-content p {
+  font-size: 16px;
+  color: #5c5e62;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.tab-content p:first-of-type {
+  font-size: 18px;
+  font-weight: 500;
+  color: #393c41;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+

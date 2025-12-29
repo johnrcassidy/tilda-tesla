@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 interface EmailStepProps {
   onNext: (email: string) => void;
+  onCreateAccount: () => void;
 }
 
-function EmailStep({ onNext }: EmailStepProps) {
+function EmailStep({ onNext, onCreateAccount }: EmailStepProps) {
   const [email, setEmail] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -37,6 +38,13 @@ function EmailStep({ onNext }: EmailStepProps) {
             Cancel
           </button>
         </div>
+        <div className="login-links">
+          <a href="#">Trouble Signing In?</a>
+        </div>
+        <div className="separator">Or</div>
+        <button type="button" className="btn-secondary" onClick={onCreateAccount}>
+          Create Account
+        </button>
       </form>
     </div>
   );

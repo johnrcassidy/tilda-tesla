@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { AuthState, LoginCredentials } from '../types';
+import { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
+import type { AuthState, LoginCredentials } from '../types';
 
 interface AuthContextType {
   authState: AuthState;
@@ -19,9 +20,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   const login = async (credentials: LoginCredentials): Promise<boolean> => {
-    // TODO: Implement actual authentication logic
-    // For now, accept any credentials
-    if (credentials.email && credentials.password && credentials.mfaCode.length >= 6) {
+    // Demo authentication - require valid email format, password (min 8 chars), and 6-digit MFA code
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValidEmail = emailRegex.test(credentials.email);
+    const isValidPassword = credentials.password && credentials.password.length >= 8;
+    const isValidMFA = credentials.mfaCode && /^\d{6}$/.test(credentials.mfaCode);
+    
+    if (isValidEmail && isValidPassword && isValidMFA) {
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
       setAuthState({
         isAuthenticated: true,
         email: credentials.email,
