@@ -42,10 +42,10 @@ App (Root)
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: React 19 + TypeScript
+- **Frontend**: React 18 + TypeScript
 - **Build Tool**: Vite
 - **State Management**: React Context API
-- **Styling**: CSS Modules / Tesla Design System
+- **Styling**: Plain CSS / Tesla Design System (black, white, grey only)
 - **Backend**: Python/Gradio (separate repository)
 
 ## 📦 Installation
