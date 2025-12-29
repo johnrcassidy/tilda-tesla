@@ -17,9 +17,22 @@
   margin-bottom: 64px;
 }
 
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .login-logo img {
   max-height: 30px;
   width: auto;
+}
+
+.app-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #171a20;
+  letter-spacing: -0.01em;
 }
 
 .login-lang {
@@ -37,6 +50,12 @@
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1.5;
+  text-align: left;
+  text-align-last: left;
+}
+
+.login-lang select option {
+  text-align: left;
 }
 
 .login-form-container {
@@ -88,6 +107,14 @@
   transition: all 0.2s ease;
   font-weight: 400;
   letter-spacing: -0.01em;
+  box-sizing: border-box;
+  text-align: left;
+  direction: ltr;
+}
+
+.form-group input:placeholder-shown {
+  text-align: left;
+  direction: ltr;
 }
 
 .form-group input:focus {
@@ -98,6 +125,9 @@
 
 .form-group input::placeholder {
   color: #8e8e8e;
+  opacity: 1;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 .password-input-wrapper {

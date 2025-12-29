@@ -23,10 +23,34 @@ export interface AnalysisResult {
 export interface VideoAnalysisResult extends AnalysisResult {
   frames: string[];
   totalFrames: number;
+  humanCount?: number;
+  totalHumans?: number;
+  humanStats?: {
+    median: number;
+    mean: number;
+    min: number;
+    max: number;
+    std_dev: number;
+  };
+  imageQuality?: {
+    brightness: number;
+    contrast: number;
+    dynamicRange: number;
+    brightness_luminance_cd_per_m2?: number;
+    contrast_ratio?: number;
+  };
 }
 
 export interface ImageAnalysisResult extends AnalysisResult {
   annotatedImage: string;
+  humanCount?: number;
+  imageQuality?: {
+    brightness: number;
+    contrast: number;
+    dynamicRange: number;
+    brightness_luminance_cd_per_m2?: number;
+    contrast_ratio?: number;
+  };
 }
 
 // Model Configuration Types

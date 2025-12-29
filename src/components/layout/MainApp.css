@@ -2,11 +2,15 @@
   width: 100%;
   min-height: 100vh;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-area {
   padding: 24px;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
+  flex: 1;
+  text-align: left;
 }
 

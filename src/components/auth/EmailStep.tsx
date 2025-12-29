@@ -20,13 +20,12 @@ function EmailStep({ onNext, onCreateAccount }: EmailStepProps) {
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
+            placeholder="example@email.com"
             required
           />
         </div>

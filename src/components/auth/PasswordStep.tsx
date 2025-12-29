@@ -21,24 +21,16 @@ function PasswordStep({ email, onSubmit, onBack, onCreateAccount }: PasswordStep
   return (
     <div className="login-step">
       <h2>Sign In</h2>
-      <div className="email-display">
-        <span>{email}</span>
-        <button type="button" onClick={onBack} className="btn-link">
-          Change
-        </button>
-      </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <div className="password-input-wrapper">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              required
-            />
+                <div className="password-input-wrapper">
+          <input
+                    type={showPassword ? 'text' : 'password'}
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
             <button
               type="button"
               className="password-toggle"

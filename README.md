@@ -5,11 +5,20 @@ A modern React-based web application for analyzing Tesla dashcam footage with st
 ## 🚀 Features
 
 - **Multi-step Authentication**: Secure login flow with email, password, and MFA
-- **Video Analysis**: Upload and analyze Tesla dashcam videos
-- **Image Analysis**: Single image analysis with object detection
+- **Video Analysis**: Upload and analyze Tesla dashcam videos with frame extraction
+- **Image Analysis**: Single image analysis with object detection and annotation
 - **Road Learning**: Help train Autopilot models
-- **Real-time Progress**: Track analysis progress
+- **Real-time Progress**: Block-style progress tracking (old school, 3.14% per block)
 - **Model Configuration**: Customize detection and weather models
+- **Human Detection**: Detect and count humans in footage with per-frame statistics
+- **Image Quality Metrics**: Brightness, contrast, and dynamic range with SI units (cd/m²)
+- **Client-side GPU Detection**: Automatic GPU/CPU detection using WebGL/WebGPU
+- **Charts & Visualisations**: 
+  - Summary and statistics charts using HTML5 Canvas
+  - Individual Matplotlib charts with scales and frame timestamps
+  - Weather distribution, traffic congestion, vehicle/human counts over time, and image quality metrics
+- **Real ML Analysis**: GPU-accelerated inference using Hugging Face Transformers (DETR, ViT)
+- **Statistics**: Comprehensive per-frame statistics (median, mean, range, std dev) for vehicles and humans
 - **GDPR/ICO Compliance**: Metadata preservation and processing time tracking
 
 ## 🏗️ Architecture
@@ -46,7 +55,10 @@ App (Root)
 - **Build Tool**: Vite
 - **State Management**: React Context API
 - **Styling**: Plain CSS / Tesla Design System (black, white, grey only)
-- **Backend**: Python/Gradio (separate repository)
+- **Backend**: Python API (part of `tilda-tesla`)
+- **GPU Detection**: WebGL/WebGPU browser APIs
+- **Charts**: HTML5 Canvas API + Matplotlib (backend)
+- **ML Models**: Hugging Face Transformers (DETR for detection, ViT for weather)
 
 ## 📦 Installation
 
@@ -56,9 +68,29 @@ npm install
 
 ## 🚦 Development
 
+### Start Backend
+
+First, set up and start the backend:
+
+```bash
+# Install backend dependencies
+npm run backend:install
+
+# Start backend server
+npm run backend
+```
+
+The backend will run on `http://localhost:7860`
+
+### Start Frontend
+
+In a separate terminal:
+
 ```bash
 npm run dev
 ```
+
+The frontend will run on `http://localhost:5173`
 
 ## 🏭 Build
 
@@ -72,4 +104,4 @@ AGPL-3.0
 
 ## 🔗 Related Repositories
 
-- Backend: `tesla-fish-local` (Python/Gradio ML inference)
+- Backend: `tilda-tesla` (Python ML inference API)

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import VideoAnalysisTab from '../tabs/VideoAnalysisTab';
 import ImageAnalysisTab from '../tabs/ImageAnalysisTab';
 import RoadLearningTab from '../tabs/RoadLearningTab';
@@ -17,6 +18,7 @@ function MainApp() {
         {activeTab === 'image' && <ImageAnalysisTab />}
         {activeTab === 'road-learning' && <RoadLearningTab />}
       </div>
+      <Footer />
     </div>
   );
 }

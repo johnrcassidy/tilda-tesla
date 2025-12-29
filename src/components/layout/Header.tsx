@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import type { Language, TabType } from '../../types';
+import archipelagosLogo from '../../assets/Archipelagos_logo_RGB_TRANSPARENT_LIGHT_BG_VECTOR.svg';
 import './Header.css';
 
 interface HeaderProps {
@@ -22,7 +23,8 @@ function Header({ activeTab, onTabChange }: HeaderProps) {
     <header className="app-header">
       <div className="header-left">
         <div className="header-logo">
-          <img src="/infrencr.png" alt="TILDA Logo" height="40" />
+          <img src={archipelagosLogo} alt="Archipelagos Logo" height="40" />
+          <span className="app-name">~tilda</span>
         </div>
       </div>
       <nav className="header-nav">

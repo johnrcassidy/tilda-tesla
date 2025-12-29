@@ -1,0 +1,106 @@
+.app-footer {
+  background-color: #ffffff;
+  border-top: 1px solid #e2e3e3;
+  padding: 16px 24px;
+  margin-top: auto;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #5c5e62;
+}
+
+.footer-separator {
+  color: #d0d1d2;
+}
+
+.footer-link {
+  color: #171a20;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+}
+
+.footer-settings-btn {
+  background: none;
+  border: none;
+  color: #171a20;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.footer-settings-btn:hover {
+  color: #000000;
+}
+
+.settings-file-panel {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e2e3e3;
+  text-align: left;
+}
+
+.settings-file-panel h4 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  color: #171a20;
+}
+
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.setting-group label {
+  font-size: 14px;
+  color: #171a20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.setting-select {
+  padding: 6px 12px;
+  border: 1px solid #d0d1d2;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: #171a20;
+  min-width: 150px;
+  text-align: left;
+  text-align-last: left;
+}
+

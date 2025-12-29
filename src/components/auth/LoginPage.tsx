@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import type { Language } from '../../types';
+import archipelagosLogo from '../../assets/Archipelagos_logo_RGB_TRANSPARENT_LIGHT_BG_VECTOR.svg';
 import EmailStep from './EmailStep';
 import PasswordStep from './PasswordStep';
 import MFAStep from './MFAStep';
@@ -59,7 +60,8 @@ function LoginPage() {
     <div className="login-container">
       <div className="login-header">
         <div className="login-logo">
-          <img src="/infrencr.png" alt="TILDA" height="30" />
+          <img src={archipelagosLogo} alt="Archipelagos Logo" height="30" />
+          <span className="app-name">~tilda</span>
         </div>
         <div className="login-lang">
           <select

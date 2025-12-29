@@ -1,27 +1,45 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Tabs.css';
 
 function RoadLearningTab() {
   const [isActive, setIsActive] = useState(false);
   const [processingProgress, setProcessingProgress] = useState(0);
   const [creditsEarned, setCreditsEarned] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    // Cleanup interval on unmount
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
   const handleToggle = () => {
-    setIsActive(!isActive);
     if (!isActive) {
-      // Simulate processing
-      const interval = setInterval(() => {
+      setIsActive(true);
+      // Clear any existing interval
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      // Simulate continuous processing
+      intervalRef.current = setInterval(() => {
         setProcessingProgress((prev) => {
           if (prev >= 100) {
-            clearInterval(interval);
             setCreditsEarned((c) => c + 10);
-            return 0;
+            return 0; // Reset and continue
           }
           return prev + 5;
         });
       }, 200);
     } else {
+      setIsActive(false);
       setProcessingProgress(0);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     }
   };
 
@@ -107,7 +125,7 @@ function RoadLearningTab() {
         <div className="tab-card">
           <h3 className="tab-subtitle">Frames Processed</h3>
           <div className="stat-value">{Math.floor(creditsEarned * 10)}</div>
-          <p className="stat-description">Total frames analyzed</p>
+          <p className="stat-description">Total frames analysed</p>
         </div>
       </div>
     </div>

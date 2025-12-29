@@ -20,6 +20,17 @@
   box-sizing: border-box;
 }
 
+/* Force all selects and dropdowns to be left-aligned */
+select,
+select option {
+  text-align: left !important;
+  text-align-last: left !important;
+}
+
+select {
+  direction: ltr;
+}
+
 body {
   margin: 0;
   min-width: 320px;

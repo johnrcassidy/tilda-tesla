@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "backend": "cd backend && python app.py",
+    "backend:install": "cd backend && pip install -r requirements.txt",
+    "check-backend": "node --input-type=module -e \"import('node-fetch').then(m => m.default(process.env.VITE_API_URL || 'http://localhost:7860/api/system-info').then(r => r.json()).then(d => console.log('Backend GPU Status:', JSON.stringify(d, null, 2))).catch(e => console.error('Backend not reachable:', e.message))).catch(() => console.log('Install node-fetch: npm install --save-dev node-fetch'))\""
   },
   "dependencies": {
     "react": "^18.2.0",
