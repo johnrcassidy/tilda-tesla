@@ -273,7 +273,34 @@ class VideoAnalyzer:
                 'congestion_level': congestion_levels[i] if i < len(congestion_levels) else 'low',
             })
         
-        return {
+        # Generate individual matplotlib charts (non-blocking - don't fail if charts fail)
+        chart_images = {}
+        try:
+            print(f"[Analysis] Generating individual charts...")
+            # Only generate charts if we have data
+            if len(vehicle_counts) > 0 or len(human_counts) > 0:
+                chart_images = self._generate_individual_charts(
+                    weather_distribution,
+                    congestion_distribution,
+                    vehicle_counts,
+                    human_counts,
+                    brightness_values,
+                    contrast_values,
+                    fps,
+                    duration
+                )
+                print(f"[Analysis] Generated {len(chart_images)} chart images")
+            else:
+                print(f"[Analysis] Skipping chart generation - no data available")
+        except Exception as e:
+            print(f"[Analysis] Warning: Error generating charts (non-fatal): {e}")
+            import traceback
+            traceback.print_exc()
+            # Continue without charts - don't fail the entire analysis
+            chart_images = {}
+        
+        # Ensure we always return a result, even if charts failed
+        result = {
             'summary': f'Video analysis complete. Detected {total_vehicles} vehicles and {total_humans} humans across {extracted_count} frames. Weather: {weather}',
             'metadata': {
                 'filename': Path(video_path).name,
@@ -305,6 +332,9 @@ class VideoAnalyzer:
             # Individual chart images (base64 encoded)
             'chartImages': chart_images,
         }
+        
+        print(f"[Analysis] Returning result with {len(frame_images)} frames, {total_vehicles} vehicles, {total_humans} humans, {len(chart_images)} charts")
+        return result
     
     def analyze_image(
         self,

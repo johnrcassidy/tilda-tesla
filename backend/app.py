@@ -146,8 +146,12 @@ def analyze_video():
                         result['images'] = []
                     
                     # Put result in queue - this must happen
+                    print(f"[Backend] Analysis function returned, preparing to put result in queue...")
+                    print(f"[Backend] Result keys: {list(result.keys()) if result else 'None'}")
                     result_queue.put(result)
                     print(f"[Backend] Analysis complete, result put in queue. Queue size: {result_queue.qsize()}")
+                    import sys
+                    sys.stdout.flush()
                 except Exception as e:
                     import traceback
                     error_trace = traceback.format_exc()
@@ -196,36 +200,52 @@ def analyze_video():
             # Wait for thread to finish (with longer timeout for analysis)
             analysis_thread.join(timeout=300.0)  # 5 minute timeout for analysis
             
+            print(f"[Backend] Thread joined. Result is None: {result is None}, Queue size: {result_queue.qsize()}, Error queue size: {error_queue.qsize()}")
+            
             # If we didn't get result in loop, try to get it now
             if result is None:
+                # Check for errors first
+                try:
+                    error = error_queue.get_nowait()
+                    print(f"[Backend] Error found in queue: {error}")
+                    raise error
+                except queue.Empty:
+                    pass
+                
                 # Try multiple times in case of race condition
-                for attempt in range(10):
+                for attempt in range(20):  # Increased attempts
                     try:
-                        result = result_queue.get_nowait()
+                        result = result_queue.get(timeout=0.5)  # Use blocking get with timeout instead of get_nowait
                         print(f"[Backend] Got result from queue after thread join (attempt {attempt + 1})")
                         break
                     except queue.Empty:
-                        # Check for error first
-                        try:
-                            error = error_queue.get_nowait()
-                            raise error
-                        except queue.Empty:
-                            pass
-                        
                         # If thread is still alive, wait a bit
                         if analysis_thread.is_alive():
+                            print(f"[Backend] Thread still alive, waiting... (attempt {attempt + 1})")
                             time.sleep(0.2)
                         else:
                             # Thread finished but no result - check one more time
-                            if attempt < 9:
-                                time.sleep(0.1)
+                            if attempt < 19:
+                                print(f"[Backend] Thread finished, retrying queue get... (attempt {attempt + 1})")
+                                time.sleep(0.2)
                                 continue
                             else:
-                                # Final attempt failed
-                                raise Exception("Analysis completed but no result returned. Thread finished but result queue is empty.")
+                                # Final attempt failed - check error queue one more time
+                                try:
+                                    error = error_queue.get_nowait()
+                                    raise error
+                                except queue.Empty:
+                                    raise Exception(f"Analysis completed but no result returned. Thread finished but result queue is empty after {attempt + 1} attempts.")
             
             if result is None:
-                raise Exception("Analysis completed but no result returned")
+                # Last check for errors
+                try:
+                    error = error_queue.get_nowait()
+                    raise error
+                except queue.Empty:
+                    raise Exception("Analysis completed but no result returned")
+            
+            print(f"[Backend] Final result ready, keys: {list(result.keys()) if result else 'None'}")
             
             # Final progress is sent by analysis function, just send 100% when done
             yield f"data: {json.dumps({'progress': 100, 'step': 'Analysis complete!'})}\n\n"
@@ -308,8 +328,12 @@ def analyze_image():
                         result['images'] = []
                     
                     # Put result in queue - this must happen
+                    print(f"[Backend] Analysis function returned, preparing to put result in queue...")
+                    print(f"[Backend] Result keys: {list(result.keys()) if result else 'None'}")
                     result_queue.put(result)
                     print(f"[Backend] Analysis complete, result put in queue. Queue size: {result_queue.qsize()}")
+                    import sys
+                    sys.stdout.flush()
                 except Exception as e:
                     import traceback
                     error_trace = traceback.format_exc()
@@ -352,36 +376,52 @@ def analyze_image():
             # Wait for thread to finish (with longer timeout for analysis)
             analysis_thread.join(timeout=300.0)  # 5 minute timeout for analysis
             
+            print(f"[Backend] Thread joined (image). Result is None: {result is None}, Queue size: {result_queue.qsize()}, Error queue size: {error_queue.qsize()}")
+            
             # If we didn't get result in loop, try to get it now
             if result is None:
+                # Check for errors first
+                try:
+                    error = error_queue.get_nowait()
+                    print(f"[Backend] Error found in queue (image): {error}")
+                    raise error
+                except queue.Empty:
+                    pass
+                
                 # Try multiple times in case of race condition
-                for attempt in range(10):
+                for attempt in range(20):  # Increased attempts
                     try:
-                        result = result_queue.get_nowait()
+                        result = result_queue.get(timeout=0.5)  # Use blocking get with timeout instead of get_nowait
                         print(f"[Backend] Got result from queue after thread join (image, attempt {attempt + 1})")
                         break
                     except queue.Empty:
-                        # Check for error first
-                        try:
-                            error = error_queue.get_nowait()
-                            raise error
-                        except queue.Empty:
-                            pass
-                        
                         # If thread is still alive, wait a bit
                         if analysis_thread.is_alive():
+                            print(f"[Backend] Thread still alive (image), waiting... (attempt {attempt + 1})")
                             time.sleep(0.2)
                         else:
                             # Thread finished but no result - check one more time
-                            if attempt < 9:
-                                time.sleep(0.1)
+                            if attempt < 19:
+                                print(f"[Backend] Thread finished (image), retrying queue get... (attempt {attempt + 1})")
+                                time.sleep(0.2)
                                 continue
                             else:
-                                # Final attempt failed
-                                raise Exception("Analysis completed but no result returned. Thread finished but result queue is empty.")
+                                # Final attempt failed - check error queue one more time
+                                try:
+                                    error = error_queue.get_nowait()
+                                    raise error
+                                except queue.Empty:
+                                    raise Exception(f"Analysis completed but no result returned. Thread finished but result queue is empty after {attempt + 1} attempts.")
             
             if result is None:
-                raise Exception("Analysis completed but no result returned")
+                # Last check for errors
+                try:
+                    error = error_queue.get_nowait()
+                    raise error
+                except queue.Empty:
+                    raise Exception("Analysis completed but no result returned")
+            
+            print(f"[Backend] Final result ready (image), keys: {list(result.keys()) if result else 'None'}")
             
             # Send final result
             yield f"data: {json.dumps(result)}\n\n"
