@@ -23,8 +23,16 @@ export interface AnalysisResult {
 export interface VideoAnalysisResult extends AnalysisResult {
   frames: string[];
   totalFrames: number;
+  vehicleCount?: number;
   humanCount?: number;
   totalHumans?: number;
+  vehicleStats?: {
+    median: number;
+    mean: number;
+    min: number;
+    max: number;
+    std_dev: number;
+  };
   humanStats?: {
     median: number;
     mean: number;
@@ -39,6 +47,14 @@ export interface VideoAnalysisResult extends AnalysisResult {
     brightness_luminance_cd_per_m2?: number;
     contrast_ratio?: number;
   };
+  qualityScore?: number;
+  avgConfidence?: number;
+  weatherDistribution?: { [key: string]: number };
+  congestionDistribution?: { [key: string]: number };
+  perFrameData?: any[];
+  vehicleCountsOverTime?: number[];
+  humanCountsOverTime?: number[];
+  chartImages?: { [key: string]: string };
 }
 
 export interface ImageAnalysisResult extends AnalysisResult {

@@ -311,7 +311,7 @@ class VideoAnalyzer:
                 'codec': 'H.264',  # Default assumption
             },
             'images': frame_images,
-            'statistics': f'Total frames analyzed: {extracted_count}\nVehicles detected: {total_vehicles}\nHumans detected: {total_humans}\nWeather: {weather}',
+            'statistics': f'Total frames analyzed: {extracted_count}\nVehicles detected: {total_vehicles} (median: {vehicle_stats["median"]:.2f}/frame, mean: {vehicle_stats["mean"]:.2f}/frame)\nHumans detected: {total_humans} (median: {human_stats["median"]:.2f}/frame, mean: {human_stats["mean"]:.2f}/frame)\nWeather: {weather}\nQuality score: {quality_score:.2f}',
             'processingTime': time.time(),
             'frames': frame_images,
             'totalFrames': extracted_count,

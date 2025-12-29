@@ -899,6 +899,31 @@ function VideoAnalysisTab() {
             <h3 className="tab-subtitle">Statistics</h3>
             <pre className="statistics-text">{analysisResults.statistics}</pre>
             
+            {/* Vehicle Detection Stats */}
+            {analysisResults.vehicleStats && (
+              <div style={{ marginTop: '24px' }}>
+                <h4 className="settings-subtitle">Vehicle Detection Statistics</h4>
+                <div className="metadata-grid">
+                  <div className="metadata-item">
+                    <span className="metadata-key">MEDIAN</span>
+                    <span className="metadata-value">{analysisResults.vehicleStats.median.toFixed(2)} vehicles/frame</span>
+                  </div>
+                  <div className="metadata-item">
+                    <span className="metadata-key">MEAN</span>
+                    <span className="metadata-value">{analysisResults.vehicleStats.mean.toFixed(2)} vehicles/frame</span>
+                  </div>
+                  <div className="metadata-item">
+                    <span className="metadata-key">RANGE</span>
+                    <span className="metadata-value">{analysisResults.vehicleStats.min} - {analysisResults.vehicleStats.max} vehicles/frame</span>
+                  </div>
+                  <div className="metadata-item">
+                    <span className="metadata-key">STD DEV</span>
+                    <span className="metadata-value">{analysisResults.vehicleStats.std_dev.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             {/* Human Detection Stats */}
             {analysisResults.humanStats && (
               <div style={{ marginTop: '24px' }}>
